@@ -1,12 +1,12 @@
 import React from 'react'
-import { Navigate, Outlet } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 
 const PrivateRoute = ({ outlet }) => {
-  let token = true
+  let token = false
   return (
     <>
-      {token ? outlet : <Navigate to={'login'} state={{ from: location.pathname }} />}
+      {token ? outlet : <Navigate to={'/login'} state={{ from: location.pathname }} />}
     </>
   )
 }

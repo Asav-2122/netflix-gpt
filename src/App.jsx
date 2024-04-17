@@ -1,4 +1,4 @@
-import DefaultRoutes from './routes/Routes'
+import DefaultRoutes from './routes/DefaultRoutes'
 
 function App() {
 
