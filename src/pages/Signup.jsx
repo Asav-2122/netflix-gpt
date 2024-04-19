@@ -1,11 +1,31 @@
-import React, { useRef, useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase.js";
 
 function Signup() {
   const [errorMessage, setErrorMessage] = useState(null);
   const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
+  const handleSignUp = () => {
+    createUserWithEmailAndPassword(
+      auth,
+      email.current.value,
+      password.current.value
+    )
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setErrorMessage(errorMessage);
+        // ..
+      });
+  };
   return (
     <div
       className="bg-no-repeat bg-cover h-screen"
@@ -18,10 +38,7 @@ function Signup() {
         onSubmit={(e) => e.preventDefault()}
         className="w-full md:w-3/12 absolute p-12 bg-black my-16 mx-auto right-0 left-0 text-white rounded-lg bg-opacity-80"
       >
-        <h1 className="font-bold text-3xl py-4">
-          Sign Up
-        </h1>
-
+        <h1 className="font-bold text-3xl py-4">Sign Up</h1>
 
         <input
           ref={name}
@@ -44,19 +61,18 @@ function Signup() {
         <p className="text-red-500 font-bold text-lg py-2">{errorMessage}</p>
         <button
           className="p-4 my-6 bg-red-700 w-full rounded-lg"
-        // onClick={handleButtonClick}
+          onClick={handleSignUp}
         >
           Sign Up
         </button>
-        <Link to={'/login'}>
+        <Link to={"/login"}>
           <p className="py-4 cursor-pointer">
-
             Already registered? Sign In Now.
           </p>
         </Link>
       </form>
     </div>
-  )
+  );
 }
 
-export default Signup
+export default Signup;
