@@ -9,6 +9,7 @@ import {
   signInWithRedirect,
 } from "firebase/auth";
 import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 function Login() {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -17,6 +18,9 @@ function Login() {
   const password = useRef(null);
 
   const provider = new GoogleAuthProvider();
+  provider.setCustomParameters({
+    prompt: "select_account",
+  });
   const handleLogin = () => {
     signInWithEmailAndPassword(
       auth,
@@ -29,12 +33,14 @@ function Login() {
 
         Cookies.set("accessToken", user.accessToken);
         navigate("/home");
+        toast.success("LogIn Successfully");
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         setErrorMessage(errorMessage);
+        toast.error(errorMessage);
       });
   };
 
@@ -48,8 +54,10 @@ function Login() {
         // The signed-in user info.
         // Cookies.set("accessToken", token);
         const user = result.user;
-        console.log(user);
+
         Cookies.set("accessToken", user.accessToken);
+
+        navigate("/home");
         // IdP data available using getAdditionalUserInfo(result)
         // ...
       })

@@ -1,10 +1,11 @@
 import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.js";
 
 function Signup() {
   const [errorMessage, setErrorMessage] = useState(null);
+  const navigate = useNavigate();
   const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
@@ -17,12 +18,16 @@ function Signup() {
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;
+        console.log(user);
+        navigate("/login");
+        toast.success("Sign Up Successfully");
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         setErrorMessage(errorMessage);
+        toast.error(errorMessage);
         // ..
       });
   };

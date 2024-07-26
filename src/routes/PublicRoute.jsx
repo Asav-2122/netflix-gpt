@@ -5,6 +5,7 @@ const PublicRoute = () => {
   let token = Cookies.get("accessToken");
   const location = useLocation();
   const to = location?.state?.from || "/home";
+
   return <>{token ? <Navigate to={to} /> : <Outlet />}</>;
 };
 

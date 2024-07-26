@@ -1,16 +1,9 @@
 import React from "react";
-import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
-function Home() {
-  const navigate = useNavigate();
-  const handleLogOut = () => {
-    Cookies.remove("accessToken");
 
-    navigate("/login");
-  };
+function Home() {
   return (
     <div>
-      <button onClick={handleLogOut}>LogOut</button>
+      <h1> Home Component</h1>
     </div>
   );
 }
